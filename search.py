@@ -111,7 +111,7 @@ def breadthFirstSearch(problem):
                 visited.append(successor)
 
     actionList = []
-    while state != problem.getStartState(): 
+    while (state != problem.getStartState()): 
         (parent, action) = cameFrom[state]
         state = parent
         actionList.append(action)
