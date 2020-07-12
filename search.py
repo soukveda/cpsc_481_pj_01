@@ -105,6 +105,7 @@ def depthFirstSearch(problem):
     end
     """
     "*** YOUR CODE HERE ***"
+<<<<<<< HEAD
 
     op = util.Stack()                                 # initialize the open stack
     startState = problem.getStartState()              # save the start state
@@ -129,6 +130,39 @@ def depthFirstSearch(problem):
     # Returning empty list if a route cannot be found
     return []
 
+=======
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    # children = [problem.getSuccessors(problem.getStartState())]
+    # for child in children:
+    #     print(child[0][0])
+    op = [problem.getStartState()]          #initialize
+    closed = []                             #remaining states
+    while op != []:
+        X = op[0]
+        op.pop(0)
+        # looks for goal
+        if problem.isGoalState(X):
+            return X
+        else:
+            # generate children of X
+            children = [problem.getSuccessors(X)]
+            # append X to closed
+            closed.append(X)
+            
+            # discard children of X if already on open or closed
+            for child in children:
+                if ((child[0][0] in op) or ((child[0][0]) in closed)):
+                    children.pop(0)
+                else:
+                    # put remaining children on left end of open
+                    op.append(child[0][0])
+                    children.pop(0)
+
+    return False
+    
+>>>>>>> filled out psuedocode for dfs; functionality not complete
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
    
