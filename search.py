@@ -93,7 +93,6 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
     s = util.Queue() # Declare the queue
-    # start = problem.getStartState()
     s.push(problem.getStartState()) 
     visited = [] # Initialize 
     cameFrom = {}
