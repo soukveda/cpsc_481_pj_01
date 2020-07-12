@@ -86,7 +86,7 @@ def depthFirstSearch(problem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
 
-     psuedocode:
+    psuedocode:
     begin
         open:=[start]
         closed:=[]
