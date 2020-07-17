@@ -92,7 +92,7 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-        """
+    """
     ALGORITHM: Breadth-First Search
     Step 1: Declare the queue 'op' and initialize it with the starting state of the search
     Step 2: Declare a list called closed and initialize it with an empty list
