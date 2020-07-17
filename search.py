@@ -109,21 +109,25 @@ def depthFirstSearch(problem):
     op = util.Stack()                                 # initialize the open stack
     startState = problem.getStartState()              # save the start state
     op.push((startState, [], []))                     # push the start state into the open state
+    closed=[]                                         # create a closed list
+    route = []                                        # create a route list to keep track of goal route
 
     while not op.isEmpty():                           # keep searching while there are states in the open stack
         (X, actions, closed) = op.pop()           # save the front state 
 
-        if problem.isGoalState(X):                 # check to see if we have reached the goal state
+        if problem.isGoalState(X):              # check to see if we have reached the goal state    
             return route
         else:
-            children = problem.getSuccessors(X)                                  # retrieve the children of the current state
+            children = problem.getSuccessors(X)                                 # retrieve the children of the current state
+            closed.append(X)                                                    # put current state in closed
+
             for successor, direction, cost in children:
                 if not successor in closed:                                     # checks to see if children are in open/closed
-                    op.push((successor, actions + [direction], closed + [X]))   
-                route = actions + [direction]
+                    op.push((successor, actions+[direction], closed+[X]))
+                    route = actions+[direction]                                 # add state to the route to goal
 
-    # Returning route in case return is not executed in the while loop
-    return route
+    # Returning empty list if a route cannot be found
+    return []
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
