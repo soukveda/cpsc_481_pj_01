@@ -92,32 +92,44 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    op = util.Queue() # Declare the queue
-    # start = problem.getStartState()
-    op.push(problem.getStartState()) 
+        """
+    ALGORITHM: Breadth-First Search
+    Step 1: Declare the queue 'op' and initialize it with the starting state of the search
+    Step 2: Declare a list called closed and initialize it with an empty list
+    Step 3: Condition statement: if the op queue is empty, jump to step 8. Otherwise, proceed to step 4
+    Step 4: If a child state is not in closed, put the state in the closed queue
+    Step 5: If the leftmost state is a goal, terminate the search and return actions. Otherwise proceed to next step.
+    Step 6: Generate the children of the leftmost state and push them onto the op queue.
+    Step 7: Return to step 4. 
+    Step 8: Once there are no more open states, return empty list. 
+    """
+
+    op = util.Queue() # Declare the queue of open states
+    start = problem.getStartState() # Declares the start state for the bfs
+    op.push((start, [], []))  # Pushes the start state onto the op queue
     closed = [] # Initialize 
-    cameFrom = {}
-    cameFrom [problem.getStartState()] = (None, None)
+    
 
-    while not op.isEmpty(): # Indicates the remaining states
-        X = op.pop()
-        if problem.isGoalState(X): break
+    while not op.isEmpty(): # Indicates the remaining states in 'op'
+        
+        (children, actions, current_cost) = op.pop()
 
-        children = problem.getSuccessors(X)
-        for (successor, action, cost) in children:
-            if successor not in closed:
-                op.push(successor)
-                cameFrom[successor] = (X, action)
-                closed.append(successor)
+        if not children in closed: 
 
-    actionList = []
-    while (X != problem.getStartState()): 
-        (parent, action) = cameFrom[X]
-        X = parent
-        actionList.append(action)
-    actionList.reverse()
+            # Push children onto closed list
+            closed.append(children)
 
-    return actionList
+            if problem.isGoalState(children): # Indicates if the leftmost state is a goal
+                return actions
+
+            for child, direction, cost in problem.getSuccessors(children):
+
+                # Put any remaining children on the right end of the op queue
+                op.push((child, actions + [direction], current_cost + [cost]))
+
+    # Return empty list once no states are left
+    return [] 
+
     # util.raiseNotDefined()
 
 def uniformCostSearch(problem):
