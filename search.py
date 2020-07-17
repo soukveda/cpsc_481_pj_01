@@ -105,12 +105,6 @@ def depthFirstSearch(problem):
     end
     """
     "*** YOUR CODE HERE ***"
-    # print("Start:", problem.getStartState())
-    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
-    # children = [problem.getSuccessors(problem.getStartState())]
-    # for child in children:
-    #     print(child[0][0])
 
     op = util.Stack()                                 # initialize the open stack
     startState = problem.getStartState()              # save the start state
@@ -128,13 +122,12 @@ def depthFirstSearch(problem):
                     op.push((successor, actions + [direction], closed + [X]))   
                 route = actions + [direction]
 
+    # Returning route in case return is not executed in the while loop
     return route
-    #util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-<<<<<<< HEAD
+   
     """
     ALGORITHM: Breadth-First Search
     Step 1: Declare the queue 'op' and initialize it with the starting state of the search
@@ -172,11 +165,6 @@ def breadthFirstSearch(problem):
 
     # Return empty list once no states are left
     return [] 
-
-    # util.raiseNotDefined()
-=======
-    util.raiseNotDefined()
->>>>>>> andrew
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
