@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -87,38 +87,28 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    dfsStack = util.Stack()
+    startState = problem.getStartState()
+    dfsStack.push((startState, [], []))
+
+    while not dfsStack.isEmpty():
+        (currentState, actions, visited) = dfsStack.pop()
+
+        if problem.isGoalState(currentState):
+            return actions
+        else:
+            children = problem.getSuccessors(currentState)
+            for successor, direction, cost in children:
+                if not successor in visited:
+                    dfsStack.push((successor, actions + [direction], visited + [currentState]))
+                route = actions + [direction]
+
+    #util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    op = util.Queue() # Declare the queue
-    # start = problem.getStartState()
-    op.push(problem.getStartState()) 
-    closed = [] # Initialize 
-    cameFrom = {}
-    cameFrom [problem.getStartState()] = (None, None)
-
-    while not op.isEmpty(): # Indicates the remaining states
-        X = op.pop()
-        if problem.isGoalState(X): break
-
-        children = problem.getSuccessors(X)
-        for (successor, action, cost) in children:
-            if successor not in closed:
-                op.push(successor)
-                cameFrom[successor] = (X, action)
-                closed.append(successor)
-
-    actionList = []
-    while (X != problem.getStartState()): 
-        (parent, action) = cameFrom[X]
-        X = parent
-        actionList.append(action)
-    actionList.reverse()
-
-    return actionList
-    # util.raiseNotDefined()
+    util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
