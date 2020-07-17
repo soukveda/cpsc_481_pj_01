@@ -85,24 +85,50 @@ def depthFirstSearch(problem):
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+
+     psuedocode:
+    begin
+        open:=[start]
+        closed:=[]
+        while open != [] do
+            begin
+                remove leftmost state from open, call it X
+                if X is a goal then return SUCCESS
+                    else begin
+                        generate children of X
+                        put X on closed
+                        discard children of X if already on open or closed
+                        put remaining children on left end of open
+                        end
+        end
+    return FAIL
+    end
     """
     "*** YOUR CODE HERE ***"
-    dfsStack = util.Stack()
-    startState = problem.getStartState()
-    dfsStack.push((startState, [], []))
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    # children = [problem.getSuccessors(problem.getStartState())]
+    # for child in children:
+    #     print(child[0][0])
 
-    while not dfsStack.isEmpty():
-        (currentState, actions, visited) = dfsStack.pop()
+    op = util.Stack()                                 # initialize the open stack
+    startState = problem.getStartState()              # save the start state
+    op.push((startState, [], []))                     # push the start state into the open state
 
-        if problem.isGoalState(currentState):
-            return actions
+    while not op.isEmpty():                           # keep searching while there are states in the open stack
+        (X, actions, closed) = op.pop()           # save the front state 
+
+        if problem.isGoalState(X):                 # check to see if we have reached the goal state
+            return route
         else:
-            children = problem.getSuccessors(currentState)
+            children = problem.getSuccessors(X)                                  # retrieve the children of the current state
             for successor, direction, cost in children:
-                if not successor in visited:
-                    dfsStack.push((successor, actions + [direction], visited + [currentState]))
+                if not successor in closed:                                     # checks to see if children are in open/closed
+                    op.push((successor, actions + [direction], closed + [X]))   
                 route = actions + [direction]
 
+    return route
     #util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
