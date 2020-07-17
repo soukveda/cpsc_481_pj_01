@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -85,13 +85,56 @@ def depthFirstSearch(problem):
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+
+     psuedocode:
+    begin
+        open:=[start]
+        closed:=[]
+        while open != [] do
+            begin
+                remove leftmost state from open, call it X
+                if X is a goal then return SUCCESS
+                    else begin
+                        generate children of X
+                        put X on closed
+                        discard children of X if already on open or closed
+                        put remaining children on left end of open
+                        end
+        end
+    return FAIL
+    end
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    # children = [problem.getSuccessors(problem.getStartState())]
+    # for child in children:
+    #     print(child[0][0])
+
+    op = util.Stack()                                 # initialize the open stack
+    startState = problem.getStartState()              # save the start state
+    op.push((startState, [], []))                     # push the start state into the open state
+
+    while not op.isEmpty():                           # keep searching while there are states in the open stack
+        (X, actions, closed) = op.pop()           # save the front state 
+
+        if problem.isGoalState(X):                 # check to see if we have reached the goal state
+            return route
+        else:
+            children = problem.getSuccessors(X)                                  # retrieve the children of the current state
+            for successor, direction, cost in children:
+                if not successor in closed:                                     # checks to see if children are in open/closed
+                    op.push((successor, actions + [direction], closed + [X]))   
+                route = actions + [direction]
+
+    return route
+    #util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+<<<<<<< HEAD
     """
     ALGORITHM: Breadth-First Search
     Step 1: Declare the queue 'op' and initialize it with the starting state of the search
@@ -131,6 +174,9 @@ def breadthFirstSearch(problem):
     return [] 
 
     # util.raiseNotDefined()
+=======
+    util.raiseNotDefined()
+>>>>>>> andrew
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
