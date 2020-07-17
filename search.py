@@ -113,7 +113,7 @@ def depthFirstSearch(problem):
     route = []                                        # create a route list to keep track of goal route
 
     while not op.isEmpty():                           # keep searching while there are states in the open stack
-        (X, actions, closed) = op.pop()           # save the front state 
+        (X, actions, cost) = op.pop()           # save the front state 
 
         if problem.isGoalState(X):              # check to see if we have reached the goal state    
             return route
@@ -123,7 +123,7 @@ def depthFirstSearch(problem):
 
             for successor, direction, cost in children:
                 if not successor in closed:                                     # checks to see if children are in open/closed
-                    op.push((successor, actions+[direction], closed+[X]))
+                    op.push((successor, actions+[direction], cost+cost))
                     route = actions+[direction]                                 # add state to the route to goal
 
     # Returning empty list if a route cannot be found
