@@ -295,7 +295,7 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        return (self.startingPosition, ())
+        return (self.startingPosition, ()) # starting state in the state space
         # util.raiseNotDefined()
 
     def isGoalState(self, state):
@@ -303,6 +303,8 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
+        
+        # Verify that all corners have been visited
         return self.corners == state[1]
         # util.raiseNotDefined()
 
@@ -327,19 +329,24 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
-            x, y = state[0]
+            x, y = state[0] # state[0] is the current position of the state
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
-            hitsWall = self.walls[nextx][nexty]
+            hitsWall = self.walls[nextx][nexty] # Used for wall collision detection
 
-            if not hitsWall: 
+            if not hitsWall: # Adds the successor state to the list if the agent has not hit a wall
                 if (nextx, nexty) in self.corners and (nextx, nexty) not in state[1]:
+                   
+                    # Append the successor state onto list l and sort the list if the state is in a corner position 
                     l = list(state[1])
                     l.append((nextx, nexty))
                     l.sort()
                     newVisit = tuple(l)
                     successors.append((((nextx, nexty), newVisit), action, 1))
+
                 else: 
+
+                    # Append to successors list
                     successors.append((((nextx, nexty), state[1]), action, 1))
 
 
@@ -378,9 +385,12 @@ def cornersHeuristic(state, problem):
 
     "*** YOUR CODE HERE ***"
     h = 0
-    for c in corners:
-        if corner not in state[1]:
+    for c in corners: # Loop: terminates once all corners are visited
+        if c not in state[1]: # Checks if the current state has not visited a corner
+
+            # Assign h the value of the lower bound on the shortest path
             h = max(h, abs(state[0][0] - c[0]) + abs(state[0][1] - c[1]))
+
     return h
 
     return 0 # Default to trivial solution
