@@ -105,7 +105,6 @@ def depthFirstSearch(problem):
     end
     """
     "*** YOUR CODE HERE ***"
-<<<<<<< HEAD
 
     op = util.Stack()                                 # initialize the open stack
     startState = problem.getStartState()              # save the start state
@@ -130,39 +129,6 @@ def depthFirstSearch(problem):
     # Returning empty list if a route cannot be found
     return []
 
-=======
-    # print("Start:", problem.getStartState())
-    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
-    # children = [problem.getSuccessors(problem.getStartState())]
-    # for child in children:
-    #     print(child[0][0])
-    op = [problem.getStartState()]          #initialize
-    closed = []                             #remaining states
-    while op != []:
-        X = op[0]
-        op.pop(0)
-        # looks for goal
-        if problem.isGoalState(X):
-            return X
-        else:
-            # generate children of X
-            children = [problem.getSuccessors(X)]
-            # append X to closed
-            closed.append(X)
-            
-            # discard children of X if already on open or closed
-            for child in children:
-                if ((child[0][0] in op) or ((child[0][0]) in closed)):
-                    children.pop(0)
-                else:
-                    # put remaining children on left end of open
-                    op.append(child[0][0])
-                    children.pop(0)
-
-    return False
-    
->>>>>>> filled out psuedocode for dfs; functionality not complete
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
    
@@ -216,11 +182,47 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
-def aStarSearch(problem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+def aStarSearch(problem, heuristic):
+    """Search the node that has the lowest combined cost and heuristic first.
+    """
+    op = util.PriorityQueue()           # declare open as priority queue
+    closed = {}
+    path = []     
+    parents = {}
+    cost = {}
+    start = problem.getStartState()
+    op.push((start, [], 0), 0)
 
+    # check to see if start state is goal
+    if problem.isGoalState(start):
+        return path
+
+    success = False;
+    while(op.isEmpty() != True and success != True):
+        X = op.pop()         
+        closed[X[0]] = X[1]     
+        if problem.isGoalState(X[0]):    
+            candidate = X[0]
+            success = True
+            break
+        for child in problem.getSuccessors(X[0]):
+            if child[0] not in closed:
+                priority = X[2] + child[2] + heuristic(child[0], problem)
+             
+                if child[0] in cost:
+                    if cost[child[0]] <= priority:
+                        continue
+                op.push((child[0], child[1], X[2] + child[2]), priority)
+                cost[child[0]] = priority
+                parents[child[0]] = X[0]
+
+    # store path to goal
+    while(candidate in parents):       
+        prev = parents[candidate]
+        path.insert(0, closed[candidate])
+        candidate = prev
+    # return path to goal
+    return path
 
 # Abbreviations
 bfs = breadthFirstSearch
