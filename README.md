@@ -1,5 +1,5 @@
-# cpsc_481_pj_01
-CPSC 481-01 Project one
+# cpsc_481_pj_02
+CPSC 481-01 Project two
 
 Group Members: <br/>
 Christopher Phongsa - cphongsa@csu.fullerton.edu <br/>
